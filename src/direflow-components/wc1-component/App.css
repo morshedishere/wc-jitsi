@@ -1,0 +1,45 @@
+.join-btn {
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #db7d0b;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+}
+
+.join-btn:hover {
+    background: #fc733c;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 800px) {
+    .jitsi-web-comp {
+        width: 100vw;
+        height: 60vw;
+        background-color: gainsboro;
+    }
+}
+@media only screen and (min-width: 801px) {
+    .jitsi-web-comp {
+        width: 800px;
+        height: 500px;
+        background-color: gainsboro;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .jitsi-screen {
+        width: 100vw;
+        height: 60vw;
+        background-color: gainsboro;
+    }
+}
+@media only screen and (min-width: 801px) {
+    .jitsi-screen {
+        width: 800px;
+        height: 500px;
+        background-color: gainsboro;
+    }
+}

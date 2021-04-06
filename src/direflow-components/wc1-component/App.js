@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { EventContext, Styled } from 'direflow-component';
 import styles from './App.css';
 import Jitsi from "react-jitsi";
+import useWindowDimensions from './WindowDimensions';
 
 
 const App = (props) => {
   const dispatch = useContext(EventContext);
-
+  const { height, width } = useWindowDimensions();
+  console.log({height,width})
   const handleClick = () => {
     const event = new Event('my-event');
     dispatch(event);
@@ -20,16 +22,12 @@ const App = (props) => {
     setMeeting(!meeting);
   };
 
-  const items = props.sampleList.map((s) =>
-    <li key={s}>{s}</li>
-  )
-
   return (
     <Styled styles={styles}>
-      <div className='app'>
-        {!meeting && <button onClick={toggleMeeting}>Start Class</button>}
-        {meeting && <button onClick={toggleMeeting}>Stop Class</button>}
-        {meeting && <WliVideoConfig roomName={props.roomName} teacher={props.teacher} />}
+      <div>
+        {!meeting && <button className="join-btn" onClick={toggleMeeting}>{props.joinMode} Class</button>}
+        {meeting && <button className="join-btn" onClick={toggleMeeting}>Stop Class</button>}
+        {meeting && <WliVideoConfig {...props} width={width>801?'800'+'px':'96vw'} height={width>801?500+'px':'60vw'} />}
       </div>
     </Styled>
   );
@@ -37,20 +35,20 @@ const App = (props) => {
 
 App.defaultProps = {
   componentTitle: 'Myjitsi Component',
-  sampleList: [
-    'Create with React',
-    'Build as Web Component',
-    'Use it anywhere!',
-  ],
   roomName: 'WLI-Test' + Date(),
-  teacher:"WLI Teacher"
+  teacher:"WLI Teacher",
+  width:'600px',
+  height:'350px',
+  joinMode:'Join'
 }
 
 App.propTypes = {
   componentTitle: PropTypes.string,
-  sampleList: PropTypes.array,
   roomName: PropTypes.string,
-  teacher: PropTypes.string
+  teacher: PropTypes.string,
+  width:PropTypes.string,
+  height:PropTypes.string,
+  joinMode:PropTypes.string
 };
 
 
@@ -59,7 +57,7 @@ const WliVideoConfig = (props) => {
     //JitsiMeetAPI.executeCommand("toggleVideo");
   };
 
-  const containerStyle = { width:'600px', height: '350px' }
+  const containerStyle = { width: props.width, height: props.height }
 
   return (
     <>
@@ -77,33 +75,38 @@ const WliVideoConfig = (props) => {
 };
 
 const interfaceConfig = {
+  SHOW_JITSI_WATERMARK: false,
+  SHOW_WATERMARK_FOR_GUESTS: false,
   LANG_DETECTION: false,
-  lang: "es",
+  lang: "en",
   APP_NAME: "WLI",
   DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
   HIDE_INVITE_MORE_HEADER: true,
   MOBILE_APP_PROMO: false,
   SHOW_CHROME_EXTENSION_BANNER: false,
+  DEFAULT_LOGO_URL: 'assets/quiz.svg',
+  BRAND_WATERMARK_LINK: 'assets/quiz.svg',
+
   TOOLBAR_BUTTONS: [
     "microphone",
     "camera",
     "fullscreen",
-    "fodeviceselection",
+    //"fodeviceselection",
     "hangup",
     "profile",
     "chat",
-    "settings",
-    "videoquality",
-    "tileview",
-    "download",
-    "help",
+    //"settings",
+    //"videoquality",
+    //"tileview",
+    //"download",
+    //"help",
     "mute-everyone",
     // 'security'
   ],
 };
 
 const config = {
-  defaultLanguage: "es",
+  defaultLanguage: "en",
   prejoinPageEnabled: false,
   disableDeepLinking: true,
 };
